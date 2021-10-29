@@ -14,6 +14,10 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.get('/test', (req, res, next) => {
+  res.status(200).send("Welcome");
+});
+
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
