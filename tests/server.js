@@ -5,6 +5,7 @@ import server from '../src/server';
 chai.use(chaiHttp);
 chai.should();
 
+
 describe('Server initialization', () => {
   it('Unexistant route should return 404', (done) => {
     chai
