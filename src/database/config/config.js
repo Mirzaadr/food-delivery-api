@@ -21,7 +21,7 @@ module.exports = {
     password: process.env.PROD_DB_PASSWORD,
     database: process.env.PROD_DB_NAME,
     host: process.env.PROD_DB_HOSTNAME,
-    use_env_variable: 'PROD_DB_URL',
+    use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
     logging: false,
   }
