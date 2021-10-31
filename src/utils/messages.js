@@ -33,7 +33,13 @@ const messages = {
 
   invalidRequest: 'Invalid request, token not found',
   invalidToken: 'Invalid Token, please login and try again',
-  resendOTPSuccessful: 'OTP sent successfully'
+  resendOTPSuccessful: 'OTP sent successfully',
+
+  loginSuccessful: 'Logged in successfully',
+  loginUserNotFound: 'User not found. Please check your credentials again.',
+  loginUserWrongCredentials: 'Invalid phone number or password. Please try again.',
+
+  logoutSuccessful: 'Logged out successfully',
 };
 
 export default messages;
