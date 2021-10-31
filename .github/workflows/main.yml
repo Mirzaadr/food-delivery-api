@@ -18,6 +18,38 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    # service containers to run with `postgres-job`
+    services:
+      # label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres:latest
+        # service environment variables
+        # `POSTGRES_HOST` is `postgres`
+        env:
+          # optional (defaults to `postgres`)
+          POSTGRES_DB: postgres_db
+          # required
+          POSTGRES_PASSWORD: pass123
+        ports:
+          # maps tcp port 5432 on service container to the host
+          - 5432:5432
+        # set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
+    env:
+      PORT: 4000
+      JWT_SECRET_KEY: aabab2e51f7318528e8b8bb03011bdde723dfe978eb7b5aa92e3d20c36bd5afd8a651301c05cbfabd4519268cb88f5e71dcb4134af226310953cfe314ced4c9c
+
+      CI_DB_USERNAME: postgres
+      CI_DB_PASSWORD: pass123
+      CI_DB_NAME: postgres_db
+      CI_DB_HOSTNAME: localhost
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
