@@ -14,7 +14,9 @@
     "migrate": "npx sequelize-cli db:migrate",
     "reset-db": "yarn drop-db && yarn create-db && yarn migrate",
 
-    "pretest": "cross-env NODE_ENV=test yarn reset-db"
+    "pretest": "cross-env NODE_ENV=test yarn reset-db",
+
+    "heroku-postbuild": "yarn migrate"
   },
   "dependencies": {
     "@babel/core": "^7.15.8",
