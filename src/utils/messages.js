@@ -40,6 +40,22 @@ const messages = {
   loginUserWrongCredentials: 'Invalid phone number or password. Please try again.',
 
   logoutSuccessful: 'Logged out successfully',
+
+  orderSuccess: 'Order placed successfully',
+  orderEmpty: 'Your order must contain at least one item with itemId, itemName, cost, adn quantity',
+  invalidTotal: 'Total must be a positive number greater or equal to 1$',
+  emptyTotal: 'Total is required',
+  emptyContents: 'Contents is required',
+  emptyItemName: 'Item name is required',
+  emptyItemCost: 'Item cost is required',
+  invalidItemCost: 'Item cost must be a positive number greater or equal to 1$',
+  emptyItemQuantity: 'Item quantity is required',
+  invalidItemQuantity: 'Total must be a positive number greater or equal to 1',
+  emptyPaymentId: 'PaymentId is required',
+  invalidPaymentId: 'PaymentId must be a string',
+
+  emptyItemId: 'ItemId is required',
+  invalidItemId: 'ItemId must be a positive integer',
 };
 
 export default messages;

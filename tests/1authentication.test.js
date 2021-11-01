@@ -115,8 +115,10 @@ describe('SIGN UP', () => {
         expect(data).to.haveOwnProperty('phoneNumber');
         expect(data).to.haveOwnProperty('status');
         expect(data).to.haveOwnProperty('otp');
+        expect(data).to.haveOwnProperty('role');
         expect(data.status).to.be.a('boolean');
         expect(data.status).to.equal(false);
+        expect(data.role).to.equal('customer');
         userToken = token;
         userOTP = data.otp;
         done();

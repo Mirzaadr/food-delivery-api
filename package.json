@@ -11,9 +11,11 @@
     "create-db": "npx sequelize-cli db:create",
     "drop-db": "npx sequelize-cli db:drop",
     "migrate": "npx sequelize-cli db:migrate",
-    "reset-db": "yarn drop-db && yarn create-db && yarn migrate",
-    "pretest": "cross-env NODE_ENV=test yarn reset-db",
-    "heroku-postbuild": "yarn migrate"
+    "prepare-db": "yarn drop-db && yarn create-db && yarn migrate && yarn create-admin && yarn seed",
+    "pretest": "cross-env NODE_ENV=test yarn prepare-db",
+    "heroku-postbuild": "yarn migrate && yarn create-admin",
+    "create-admin": "babel-node ./src/database/scripts/adminScripts.js",
+    "seed": "npx sequelize-cli db:seed:all"
   },
   "dependencies": {
     "@babel/core": "^7.15.8",

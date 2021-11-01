@@ -6,7 +6,7 @@ import models from '../database/models';
 import services from '../services/services';
 import statusCodes from '../utils/statusCodes';
 import messages from '../utils/messages';
-import redisClient from '../config/redisClient';
+// import redisClient from '../config/redisClient';
 
 const { signup, verifyOTP, login } = authentication;
 const { returnErrorMessages, errorResponse, isPasswordValid } = helpers;
@@ -58,19 +58,25 @@ const checkUserToken = async (req, res, next) => {
   try {
     token = token.split(' ').pop();
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    return redisClient.smembers('token', async (err, tokensArray) => {
-      if (err) {
-        return errorResponse(res, serverError, err.message);
-      }
-      if (tokensArray.includes(token)) {
-        return errorResponse(res, unauthorized, invalidToken);
-      }
-      const { phoneNumber } = decodedToken;
-      const condition = { phoneNumber };
-      const userData = await findByCondition(User, condition);
-      req.userData = userData.dataValues;
-      next();
-    });
+    /* with redis */
+    // return redisClient.smembers('token', async (err, tokensArray) => {
+    //   if (err) {
+    //     return errorResponse(res, serverError, err.message);
+    //   }
+    //   if (tokensArray.includes(token)) {
+    //     return errorResponse(res, unauthorized, invalidToken);
+    //   }
+    //   const { phoneNumber } = decodedToken;
+    //   const condition = { phoneNumber };
+    //   const userData = await findByCondition(User, condition);
+    //   req.userData = userData.dataValues;
+    //   next();
+    // });
+    const { phoneNumber } = decodedToken;
+    const condition = { phoneNumber };
+    const userData = await findByCondition(User, condition);
+    req.userData = userData.dataValues;
+    return next();
   } catch (error) {
     return errorResponse(res, badRequest, invalidToken);
   }

@@ -4,7 +4,8 @@ import messages from '../utils/messages';
 import misc from '../helpers/misc';
 import services from '../services/services';
 import models from '../database/models';
-import redisClient from '../config/redisClient';
+// import redisClient from '../config/redisClient';
+import roles from '../utils/roles';
 
 const {
   created,
@@ -31,6 +32,7 @@ const {
 } = misc;
 const { saveData, updatebyCondition } = services;
 const { User } = models;
+const { CUSTOMER } = roles;
 
 export default class Authentication {
   static signup = async (req, res) => {
@@ -51,6 +53,7 @@ export default class Authentication {
         address,
         password: hashedPassword,
         otp: otpCode,
+        role: CUSTOMER,
       };
 
       // save data in db
@@ -120,7 +123,7 @@ export default class Authentication {
   static logout = async (req, res) => {
     try {
       const token = req.get('authorization').split(' ').pop();
-      redisClient.sadd('token', token);
+      // redisClient.sadd('token', token);
       return successResponse(res, success, logoutSuccessful, null, null);
     } catch (error) {
       return errorResponse(res, unauthorized, loginUserWrongCredentials)
