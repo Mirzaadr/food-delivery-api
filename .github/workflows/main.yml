@@ -54,6 +54,9 @@ jobs:
       CI_DB_PASSWORD: pass123
       CI_DB_NAME: postgres_db
       CI_DB_HOSTNAME: localhost
+      
+      ADMIN_PHONE: ${{ secrets.ADMIN_PHONE }}
+      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
