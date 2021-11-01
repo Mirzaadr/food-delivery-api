@@ -1,4 +1,8 @@
 'use strict';
+const roles = require('../../utils/roles');
+
+const { CUSTOMER, ADMIN, STAFF } = roles;
+
 const {
   Model
 } = require('sequelize');
@@ -10,7 +14,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasMany(models.Order, {
+        foreignKey: 'userId'
+      })
     }
   };
   User.init({
@@ -21,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     otp: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
+    role: DataTypes.ENUM(CUSTOMER, STAFF, ADMIN),
   }, {
     sequelize,
     modelName: 'User',

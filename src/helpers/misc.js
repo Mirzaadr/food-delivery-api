@@ -51,6 +51,23 @@ const generateHashPassword = async (password) => {
   return hashedPassword;
 }
 
+const isPasswordValid = async (password, dbPassword) => {
+  const isValid = await bcrypt.compare(password, dbPassword);
+  return isValid;
+}
+
+const parseOrderContents = async (contents, orderId) => {
+  const contentsWithOrderId = [];
+  contents.forEach((item) => {
+    const itemData = {
+      ...item,
+      orderId,
+    };
+    contentsWithOrderId.push(itemData);
+  });
+  return contentsWithOrderId;
+}
+
 export default {
   successResponse,
   errorResponse,
@@ -59,4 +76,6 @@ export default {
   generateOTP,
   sendOTP,
   generateHashPassword,
+  isPasswordValid,
+  parseOrderContents,
 }

@@ -20,11 +20,18 @@ const updatebyCondition = async (model, data, condition) => {
       returning: true,
       plain: true,
     });
-  return updated[1];
+    return updated[1];
 }
+  
+const saveManyRows = async (model, obj) => {
+  const data = await model.bulkCreate(obj);
+  return data;
+}
+
 
 export default {
   saveData,
   findByCondition,
   updatebyCondition,
+  saveManyRows,
 }

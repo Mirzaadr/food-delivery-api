@@ -8,15 +8,14 @@
     "dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/server.js",
     "dev-test": "cross-env NODE_ENV=test nyc mocha --require @babel/register ./tests/*.js --timeout 8000 --exit",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --require @babel/register ./tests/*.js --timeout 8000 --exit",
-
     "create-db": "npx sequelize-cli db:create",
     "drop-db": "npx sequelize-cli db:drop",
     "migrate": "npx sequelize-cli db:migrate",
-    "reset-db": "yarn drop-db && yarn create-db && yarn migrate",
-
-    "pretest": "cross-env NODE_ENV=test yarn reset-db",
-
-    "heroku-postbuild": "yarn migrate"
+    "prepare-db": "yarn drop-db && yarn create-db && yarn migrate && yarn create-admin && yarn seed",
+    "pretest": "cross-env NODE_ENV=test yarn prepare-db",
+    "heroku-postbuild": "yarn migrate && yarn create-admin",
+    "create-admin": "babel-node ./src/database/scripts/adminScripts.js",
+    "seed": "npx sequelize-cli db:seed:all"
   },
   "dependencies": {
     "@babel/core": "^7.15.8",
@@ -39,6 +38,7 @@
     "morgan": "^1.10.0",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
+    "redis": "^3.1.2",
     "sequelize": "^6.8.0",
     "sequelize-cli": "^6.2.0",
     "sequelize-test-helpers": "^1.4.2",
