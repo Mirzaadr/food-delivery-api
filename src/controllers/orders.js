@@ -7,6 +7,7 @@ import models from '../database/models';
 const {
   created,
   serverError,
+  success,
 } = statusCodes;
 const {
   orderSuccess,
@@ -34,6 +35,22 @@ export default class Orders {
       const orderContentsData = await parseOrderContents(contents, orderId);
       await saveManyRows(Contents, orderContentsData);
       return successResponse(res, created, orderSuccess, null, orderData);
+    } catch (error) {
+      return errorResponse(res, serverError, error);
+    }
+  }
+
+  static getSpecificOrder = async (req, res) => {
+    try {
+      return successResponse(res, success, null, null, req.orderData);
+    } catch (error) {
+      return errorResponse(res, serverError, error);
+    }
+  }
+
+  static getOrdersList = async (req, res) => {
+    try {
+      return successResponse(res, success, null, null, req.ordersList);
     } catch (error) {
       return errorResponse(res, serverError, error);
     }

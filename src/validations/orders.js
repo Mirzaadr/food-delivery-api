@@ -71,6 +71,25 @@ const placeOrder = (data) => {
   });
 }
 
+
+const getOrder = (data) => {
+  const schema = Joi.object({
+    id: Joi.number().positive().required().messages(createErrorMessages(
+      'number',
+      `${messages.missingId}`,
+      `${messages.invalidId}`,
+      `${messages.invalidId}`,
+      `${messages.invalidId}`,
+    )),
+  });
+  
+  return schema.validate(data, {
+    abortEarly: false,
+    allowUnknown: false,
+  });
+}
+
 export default {
   placeOrder,
+  getOrder,
 }
