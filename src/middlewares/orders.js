@@ -6,13 +6,13 @@ import models from '../database/models';
 import services from '../services/services';
 import _ from 'lodash';
 
-const { placeOrder, getOrder } = orders;
+const { placeOrder, getOrder, updateOrder } = orders;
 const {
   returnErrorMessages,
   errorResponse,
 } = helpers;
-const { notFound, serverError } = statusCodes;
-const { orderNotFound, ordersListNotFound } = messages;
+const { notFound, serverError, conflict } = statusCodes;
+const { orderNotFound, ordersListNotFound, orderUpdateConflict } = messages;
 
 const { Order, Contents, User } = models;
 const { findOrderByConditionAll, findAllOrders } = services;
@@ -24,6 +24,11 @@ const validatePlaceOrder = async (req, res, next) => {
 
 const validateGetOrder = async (req, res, next) => {
   const { error } = getOrder(req.params);
+  returnErrorMessages(error, res, next);
+}
+
+const validateUpdateOrder = async (req, res, next) => {
+  const { error } = updateOrder(req.body);
   returnErrorMessages(error, res, next);
 }
 
@@ -71,11 +76,26 @@ const findOrdersList = async (req, res, next) => {
   }
 }
 
+const checkOrderStatus = async (req, res, next) => {
+  try {
+    const { status } = req.body;
+    const existingStatus = req.orderData.status;
+    if (status === existingStatus) {
+      return errorResponse(res, conflict, orderUpdateConflict);
+    }
+    return next();
+  } catch (error) {
+    return errorResponse(res, serverError, error);
+  }
+}
+
 export default {
   validatePlaceOrder,
   validateGetOrder,
+  validateUpdateOrder,
   findUserOrderById,
   findAllOrders,
   findOrderById,
   findOrdersList,
+  checkOrderStatus,
 }

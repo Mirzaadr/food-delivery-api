@@ -89,7 +89,25 @@ const getOrder = (data) => {
   });
 }
 
+const updateOrder = (data) => {
+  const schema = Joi.object({
+    status: Joi.string().regex(/^(accepted|onthemove|completed)$/).required().messages(createErrorMessages(
+      'string',
+      `${messages.orderUpdateEmptyStatus}`,
+      `${messages.orderUpdateInvalidStatus}`,
+      `${messages.orderUpdateInvalidStatus}`,
+      `${messages.orderUpdateInvalidStatus}`,
+    )),
+  });
+  
+  return schema.validate(data, {
+    abortEarly: false,
+    allowUnknown: false,
+  });
+}
+
 export default {
   placeOrder,
   getOrder,
+  updateOrder,
 }
