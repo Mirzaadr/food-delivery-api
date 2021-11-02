@@ -56,6 +56,12 @@ const messages = {
 
   emptyItemId: 'ItemId is required',
   invalidItemId: 'ItemId must be a positive integer',
+
+  missingId: 'id is required',
+  invalidId: 'id must be a number',
+  orderNotFound: 'Order not found',
+  adminOnlyResource: 'You are not allowed to use this resource',
+  ordersListNotFound: 'No orders found at the moment',
 };
 
 export default messages;
