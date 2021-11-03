@@ -11,13 +11,14 @@ const {
 } = statusCodes;
 const {
   orderSuccess,
+  orderUpdateSuccess
 } = messages;
 const {
   successResponse,
   errorResponse,
   parseOrderContents,
 } = misc;
-const { saveData, saveManyRows } = services;
+const { saveData, saveManyRows, updatebyCondition } = services;
 const { Order, Contents } = models;
 
 export default class Orders {
@@ -51,6 +52,18 @@ export default class Orders {
   static getOrdersList = async (req, res) => {
     try {
       return successResponse(res, success, null, null, req.ordersList);
+    } catch (error) {
+      return errorResponse(res, serverError, error);
+    }
+  }
+
+  static updateOrder = async (req, res) => {
+    try {
+      const { status } = req.body;
+      const condition = { id: req.orderData.id };
+      const data = { status };
+      const { dataValues } = await updatebyCondition(Order, data, condition);
+      return successResponse(res, success, orderUpdateSuccess, null, dataValues);
     } catch (error) {
       return errorResponse(res, serverError, error);
     }
